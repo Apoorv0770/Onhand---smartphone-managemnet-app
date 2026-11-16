@@ -1,0 +1,3 @@
+# Keep the same line endings on every machine. The files are written with LF,
+# and Vercel builds on Linux.
+* text=auto eol=lf

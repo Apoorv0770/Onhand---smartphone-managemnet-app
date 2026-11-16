@@ -1,0 +1,362 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ---------------------------------------------------------------------------
+   Onhand design tokens
+   Warm paper surfaces, charcoal ink, one vermilion accent.
+   Every colour in the app resolves to one of these variables.
+--------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --background: oklch(0.985 0.004 85);
+  --surface: oklch(1 0 0);
+  --surface-2: oklch(0.972 0.005 85);
+  --surface-3: oklch(0.948 0.007 85);
+
+  /* Ink */
+  --foreground: oklch(0.21 0.008 75);
+  --muted-foreground: oklch(0.46 0.01 75);
+  --faint-foreground: oklch(0.6 0.01 75);
+
+  /* Lines */
+  --border: oklch(0.918 0.007 85);
+  --border-strong: oklch(0.86 0.009 85);
+  --ring: oklch(0.645 0.2 38);
+
+  /* Brand accent */
+  --brand: oklch(0.645 0.2 38);
+  --brand-strong: oklch(0.53 0.175 38);
+  --brand-soft: oklch(0.958 0.028 55);
+  --brand-foreground: oklch(0.99 0.008 85);
+
+  /* Primary action (ink) */
+  --primary: oklch(0.21 0.008 75);
+  --primary-hover: oklch(0.3 0.008 75);
+  --primary-foreground: oklch(0.985 0.004 85);
+
+  /* Status */
+  --success: oklch(0.5 0.12 155);
+  --success-soft: oklch(0.955 0.04 155);
+  --success-dot: oklch(0.68 0.17 150);
+  --warning: oklch(0.52 0.12 70);
+  --warning-soft: oklch(0.96 0.05 90);
+  --warning-dot: oklch(0.76 0.15 78);
+  --danger: oklch(0.53 0.2 27);
+  --danger-soft: oklch(0.96 0.025 25);
+
+  /* WhatsApp action */
+  --whatsapp: oklch(0.77 0.2 150);
+  --whatsapp-hover: oklch(0.73 0.2 150);
+  --whatsapp-foreground: oklch(0.22 0.05 155);
+
+  /* Elevation */
+  --shadow-color: 40 12% 12%;
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-faint: var(--faint-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-success-dot: var(--success-dot);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-dot: var(--warning-dot);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-hover: var(--whatsapp-hover);
+  --color-whatsapp-foreground: var(--whatsapp-foreground);
+
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
+
+  --shadow-xs: 0 1px 2px hsl(var(--shadow-color) / 0.05);
+  --shadow-sm: 0 1px 2px hsl(var(--shadow-color) / 0.05), 0 2px 6px -2px hsl(var(--shadow-color) / 0.06);
+  --shadow-md: 0 2px 4px -1px hsl(var(--shadow-color) / 0.05), 0 8px 20px -6px hsl(var(--shadow-color) / 0.1);
+  --shadow-lg: 0 4px 10px -2px hsl(var(--shadow-color) / 0.06), 0 24px 48px -16px hsl(var(--shadow-color) / 0.18);
+  --shadow-pop: 0 0 0 1px hsl(var(--shadow-color) / 0.06), 0 4px 10px -2px hsl(var(--shadow-color) / 0.06), 0 16px 36px -10px hsl(var(--shadow-color) / 0.16);
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-pulse-dot: pulse-dot 2.4s ease-in-out infinite;
+  --animate-rise: rise 0.5s var(--ease-out-quint) both;
+
+  @keyframes shimmer {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 color-mix(in oklch, currentColor 45%, transparent);
+    }
+    50% {
+      box-shadow: 0 0 0 5px color-mix(in oklch, currentColor 0%, transparent);
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.5rem;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: color-mix(in oklch, var(--brand) 24%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  a,
+  button,
+  summary,
+  label,
+  [role="button"],
+  [role="tab"],
+  [role="menuitem"],
+  [role="option"] {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  summary {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Hide the number spinners: prices and percentages are typed, not stepped. */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Utilities
+--------------------------------------------------------------------------- */
+
+@utility container-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 76rem;
+  padding-inline: 1rem;
+
+  @media (min-width: 40rem) {
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 64rem) {
+    padding-inline: 2rem;
+  }
+}
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@utility tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@utility skeleton {
+  border-radius: var(--radius-sm);
+  background-color: var(--surface-3);
+  background-image: linear-gradient(
+    100deg,
+    transparent 30%,
+    color-mix(in oklch, var(--surface) 70%, transparent) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+
+/* A faint paper grid used behind hero art and empty states. */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklch, var(--foreground) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklch, var(--foreground) 5%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+@utility bg-dots {
+  background-image: radial-gradient(color-mix(in oklch, var(--foreground) 11%, transparent) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+@utility mask-fade-b {
+  mask-image: linear-gradient(to bottom, black 55%, transparent);
+}
+
+@utility mask-fade-edges {
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+}
+
+@utility mask-fade-x {
+  mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent);
+}
+
+/* ---------------------------------------------------------------------------
+   Motion preferences
+--------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Toasts (sonner) inherit the token set. */
+[data-sonner-toaster] {
+  --normal-bg: var(--foreground);
+  --normal-text: var(--background);
+  --normal-border: transparent;
+  --border-radius: 12px;
+  font-family: var(--font-sans);
+}
+
+/* ---------------------------------------------------------------------------
+   Scroll reveal for marketing sections.
+   Pure CSS and progressive: browsers without scroll-driven animations, and
+   anyone who prefers reduced motion, simply see the content in place.
+--------------------------------------------------------------------------- */
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility reveal {
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 34%;
+    }
+  }
+}
